@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>TechWorld - Search Results</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #222;
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .navbar .logo:hover {
+            color:rgb(173, 177, 181);
+        }
+        
+        .search-form {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            font-size: 14px;
+            outline: none;
+            width: 250px;
+        }
+
+        .search-btn {
+            background: none;
+            border: none;
+            margin-left: -35px;
+            cursor: pointer;
+            color: #333;
+            font-size: 1.2em;
+        }
+
+        .search-btn:hover {
+            color:rgb(201, 162, 146);
+        }
+
+
+        /* Search results container */
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #444;
+            text-align: center;
+        }
+
+        p {
+            font-size: 1.1em;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+        }
+
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        li:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo">TechWorld</div>
+        <form action="{% url 'post_search' %}" method="get" class="search-form">
+            <input 
+                type="text" 
+                name="q" 
+                placeholder="Search..." 
+                value="{{ request.GET.q|default:'' }}" 
+                class="search-input">
+                <button type="submit" class="search-btn"><i class="fas fa-search"></i></button>
+        </form>
+    </div>
+
+    <!-- Search Results -->
+    <div class="container">
+        <h1>Search Results</h1>
+        <p>Search Result for: {{ query }}</p>
+        <ul>
+            {% for post in results %}
+                <li> <a href="{% url 'post_detail' post.slug %}">{{ post.title }}</a></li>
+            {% empty %}
+                <li>No results found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ post.title }}</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        /* Navbar styles */
+        .navbar {
+            background-color: #222;
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .logo {
+            font-size: 1.8em;
+            font-weight: bold;
+        }
+
+        .navbar .logo:hover {
+            color:rgb(173, 177, 181);
+        }
+
+
+        /* Post styles */
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #444;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        small {
+            color: #888;
+        }
+
+        /* Comments section */
+        h2, h3 {
+            color: #444;
+            margin-top: 30px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 15px;
+        }
+
+        li strong {
+            color: #333;
+        }
+
+        .comment-form {
+            margin-top: 20px;
+        }
+
+        .comment-form input, .comment-form textarea {
+            width: 90%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .comment-form button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .comment-form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo">TechWorld</div>
+        
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <h1>{{ post.title }}</h1>
+        <p>{{ post.content|safe }}</p>
+        <small>Published on {{ post.created_at }}</small>
+
+        <!-- Comments Section -->
+        <h2>Comments</h2>
+        <ul>
+            {% for comment in comments %}
+                <li><strong>{{ comment.author }}</strong>: {{ comment.content }}</li>
+            {% empty %}
+                <li>No comments yet.</li>
+            {% endfor %}
+        </ul>
+
+        <!-- Comment Form -->
+        <h3>Leave a Comment</h3>
+        <form method="post" class="comment-form">
+            {% csrf_token %}
+            <input type="text" name="author" placeholder="Your Name" required><br>
+            <textarea name="content" placeholder="Your Comment" required></textarea><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
